@@ -14,8 +14,8 @@ const zero = 0
 const test = {
     NUMBER: "Convert a basic number",
     STRING: "Convert a string",
-    LIMIT: "Limit values",
-    NAN: "NaN and null"
+    LIMIT: "Convert limit values",
+    NAN: "Convert NaN and null values"
 }
 
 const modules = {
@@ -23,14 +23,14 @@ const modules = {
         DESCRIPTION: "toFinite",
         MODEL: new Map([
             [test.NUMBER, [9, 200] ],
-            [test.STRING, ["3.2", "0"] ],
-            [test.LIMIT, [Infinity, -Infinity, 0]],
+            [test.STRING, ["3.2", "0", " 7.5 ", " 5"] ],
+            [test.LIMIT, [Infinity, -Infinity, 0] ],
             [test.NAN, [null, NaN] ]
         ]),
         EXPECTED: new Map([
             [test.NUMBER, [9, 200] ],
-            [test.STRING, [3.2, zero] ],
-            [test.LIMIT, [MAX_INTEGER, -MAX_INTEGER, zero]],
+            [test.STRING, [3.2, zero, 7.5, 5] ],
+            [test.LIMIT, [MAX_INTEGER, -MAX_INTEGER, zero] ],
             [test.NAN, [zero, zero] ]
         ])
     }, 
@@ -39,13 +39,13 @@ const modules = {
         MODEL: new Map([
             [test.NUMBER, [9, 200] ],
             [test.STRING, ["3.2", "0"] ],
-            [test.LIMIT, [Infinity, -Infinity, 0]],
+            [test.LIMIT, [Infinity, -Infinity, 0] ],
             [test.NAN, [null, NaN] ]
         ]),
         EXPECTED: new Map([
             [test.NUMBER, [9, 200] ],
             [test.STRING, [3, zero] ],
-            [test.LIMIT, [MAX_INTEGER, -MAX_INTEGER, zero]],
+            [test.LIMIT, [MAX_INTEGER, -MAX_INTEGER, zero] ],
             [test.NAN, [zero, zero] ]
         ])
     }, 
@@ -53,28 +53,28 @@ const modules = {
         DESCRIPTION: "toNumber",
         MODEL: new Map([
             [test.NUMBER, [9, 200] ],
-            [test.STRING, ["3.2", "0"] ],
-            [test.LIMIT, [Infinity, -Infinity, 0]],
+            [test.STRING, ["3.2", "0", " 70 "] ],
+            [test.LIMIT, [Infinity, -Infinity, 0, -0] ],
             [test.NAN, [null] ] // NaN removed for equality reasons
         ]),
         EXPECTED: new Map([
             [test.NUMBER, [9, 200] ],
-            [test.STRING, [3.2, zero] ],
-            [test.LIMIT, [Infinity, -Infinity, zero]],
-            [test.NAN, [zero, NaN] ]
+            [test.STRING, [3.2, zero, 70] ],
+            [test.LIMIT, [Infinity, -Infinity, zero, zero] ],
+            [test.NAN, [zero] ]
         ])
     }, 
     STRING: {
         DESCRIPTION: "toString",
         MODEL: new Map([
             [test.NUMBER, [9, 200] ],
-            [test.STRING, ["3.2", "0", [6,5,4] ] ],
+            [test.STRING, ["3.2", "0", [6,5,4], [9, 5, 4] ] ],
             [test.LIMIT, [Infinity, -Infinity, -0]],
             [test.NAN, [null, NaN] ]
         ]),
         EXPECTED: new Map([
             [test.NUMBER, ["9", "200"] ],
-            [test.STRING, ["3.2", "0", "6,5,4"] ],
+            [test.STRING, ["3.2", "0", "6,5,4", "9,5,4"] ],
             [test.LIMIT, ["Infinity", "-Infinity", "-0"]],
             [test.NAN, ["", "NaN"] ]
         ])
@@ -86,8 +86,7 @@ function runTests(module, moduleFunc) {
 
     describe(module.DESCRIPTION, ()=> {
 
-        for (let testCase of module.MODEL.keys()) {
-            
+        for (let testCase of module.MODEL.keys()) {    
             it(testCase, () => {
                 let currentDataArray = module.MODEL.get(testCase)
                 let expectedData = module.EXPECTED.get(testCase)
