@@ -55,15 +55,15 @@ const modules = {
 	],
 	results: [
 		[true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
-		[false,true,true,false,false,false,false,true,false,false,false,false,false,true,false,false,false,true,true],
-		[false,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,true],
+		[true,true,true,false,false,true,false,true,false,false,false,false,false,true,false,false,false,true,true],
+		[true,true,false,false,false,true,false,false,false,false,false,false,false,false,false,false,false,true,true],
 		[false,false,false,true,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false],
 		[false,false,false,false,false,true,false,false,false,false,false,false,false,false,false,false,false,false,false],
 		[false,false,false,false,false,false,true,false,false,false,false,false,false,false,false,false,false,false,false],
-		[false,false,false,true,true,false,false,false,true,true,false,false,false,false,true,false,false,false,true],
+		[true,false,false,true,true,false,true,false,true,true,false,true,true,false,true,true,true,true,true],
 		[false,false,false,false,false,false,false,false,false,true,false,false,false,false,false,false,false,false,false],
-		[true,true,true,true,true,true,true,true,false,true,true,true,true,true,true,true,true,true,true],
-		[true,true,true,true,true,true,true,true,false,true,true,true,true,true,true,false,true,true,true],
+		[true,true,false,false,false,true,true,false,false,false,true,false,false,false,true,true,false,true,true],
+		[true,true,false,false,false,true,true,false,false,false,true,false,false,false,true,false,false,true,true],
 		[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,false,false],
 		[false,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,false]
 	]
@@ -73,6 +73,7 @@ function runTests() {
 	for(let f=0; f<modules.functions.length; f++){
 		let testedfunc = modules.functions[f]
 
+		console.log(testedfunc.name)
 		describe(testedfunc.name, ()=> {
 
 			for (let p=0; p<modules.params.length; p++) {   
