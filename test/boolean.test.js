@@ -19,18 +19,18 @@ import isTypedArray from "../src/isTypedArray.js"
 
 const modules = {
     functions: [
-		isArgument,
-		isArrayLike,
-		isArrayLikeObject,
-		isBoolean,
-		isBuffer,
-		isDate,
-		isEmpty,
-		isLength,
-		isObject,
-		isObjectLike,
-		isSymbol,
-		isTypedArray
+		{ func: isArgument, name: "isArgument" },
+		{ func: isArrayLike, name: "isArrayLike"},
+		{ func: isArrayLikeObject, name: "isArrayLikeObject"},
+		{ func: isBoolean, name: "isBoolean"},
+		{ func: isBuffer, name: "isBuffer"},
+		{ func: isDate, name: "isDate"},
+		{ func: isEmpty, name: "isEmpty"},
+		{ func: isLength, name: "isLength"},
+		{ func: isObject, name: "isObject"},
+		{ func: isObjectLike, name: "isObjectLike"},
+		{ func: isSymbol, name: "isSymbol"},
+		{ func: isTypedArray, name: "isTypedArray"}
     ],
     params: [
 		{ parameter: function() { return arguments}(), description: "Function arguments"},
@@ -73,7 +73,6 @@ function runTests() {
 	for(let f=0; f<modules.functions.length; f++){
 		let testedfunc = modules.functions[f]
 
-		console.log(testedfunc.name)
 		describe(testedfunc.name, ()=> {
 
 			for (let p=0; p<modules.params.length; p++) {   
@@ -81,7 +80,7 @@ function runTests() {
 				let result = modules.results[f][p]
 
 				it(testedparam.description + ", expected to be " + result, () => {
-					expect(testedfunc(testedparam.parameter)).to.equal(result)
+					expect(testedfunc.func(testedparam.parameter)).to.equal(result)
 				})
 			}
 		})
