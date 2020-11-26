@@ -21,6 +21,7 @@ const test = {
 const modules = {
     FINITE: {
         DESCRIPTION: "toFinite",
+        func: toFinite,
         MODEL: new Map([
             [test.NUMBER, [9, 200] ],
             [test.STRING, ["3.2", "0", " 7.5 ", " 5"] ],
@@ -36,6 +37,7 @@ const modules = {
     }, 
     INTEGER: {
         DESCRIPTION: "toInteger",
+        func: toInteger,
         MODEL: new Map([
             [test.NUMBER, [9, 200] ],
             [test.STRING, ["3.2", "0"] ],
@@ -51,6 +53,7 @@ const modules = {
     }, 
     NUMBER: {
         DESCRIPTION: "toNumber",
+        func: toNumber,
         MODEL: new Map([
             [test.NUMBER, [9, 200] ],
             [test.STRING, ["3.2", "0", " 70 "] ],
@@ -66,6 +69,7 @@ const modules = {
     }, 
     STRING: {
         DESCRIPTION: "toString",
+        func: toString,
         MODEL: new Map([
             [test.NUMBER, [9, 200] ],
             [test.STRING, ["3.2", "0", [6,5,4], [9, 5, 4] ] ],
@@ -81,27 +85,31 @@ const modules = {
     }
 };
 
+const testProcess = [modules.FINITE,
+                     modules.INTEGER,
+                     modules.NUMBER,
+                     modules.STRING
+                    ]
+
 // Execute test
-function runTests(module, moduleFunc) {
+function runTests() {
 
-    describe(module.DESCRIPTION, ()=> {
+    for (let i in testProcess) {
+        let module = testProcess[i]
+        describe(module.DESCRIPTION, ()=> {
 
-        for (let testCase of module.MODEL.keys()) {    
-            it(testCase, () => {
-                let currentDataArray = module.MODEL.get(testCase)
-                let expectedData = module.EXPECTED.get(testCase)
-                let dataLength = currentDataArray.length
+            for (let testCase of module.MODEL.keys()) {    
+                it(testCase, () => {
+                    let currentDataArray = module.MODEL.get(testCase)
+                    let expectedData = module.EXPECTED.get(testCase)
+                    let dataLength = currentDataArray.length
 
-                for (let pos = 0; pos < dataLength; pos++ ) {
-                    expect(moduleFunc(currentDataArray[pos])).to.equal(expectedData[pos])
-                }
-            })
-        }
-    })
-
+                    for (let pos = 0; pos < dataLength; pos++ ) {
+                        expect(module.func(currentDataArray[pos])).to.equal(expectedData[pos])
+                    }
+                })
+            }
+        })
+    }
 }
-
-runTests(modules.FINITE, toFinite);
-runTests(modules.INTEGER, toInteger)
-runTests(modules.NUMBER, toNumber)
-runTests(modules.STRING, toString)
+runTests()
