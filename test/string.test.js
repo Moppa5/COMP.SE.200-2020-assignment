@@ -24,10 +24,12 @@ const tests = {
     },
     WORDS: {
         BASIC: "Module's own example",
-        REGEX_AS_STRING: "Regex given as string"
+        REGEX_AS_STRING: "Regex parameter given as a string",
+        REGEX: "Valid regex"
     }
 }
 
+// Test modules and their data
 const modules = {
 
     CAPITALIZE: {
@@ -98,34 +100,37 @@ const modules = {
         func: words,
         MODEL: new Map([
             [tests.WORDS.BASIC, ["fred, barney, & pebbles", ["fred, barney, & pebbles", /[^, ]+/g] ]],
-            [tests.WORDS.REGEX_AS_STRING, [["fred, barney, & pebbles", "/[^, ]+/g"] ]]
+            [tests.WORDS.REGEX_AS_STRING, [["fred, barney, & pebbles", "/[^, ]+/g"] ]],
+            [tests.WORDS.REGEX, [ ["//my//string//to//be//found", /[^, //]+/g ] ] ]
         ]),
         EXPECTED: new Map([
             [tests.WORDS.BASIC, [ ['fred', 'barney', 'pebbles'], ['fred', 'barney', '&', 'pebbles'] ]],
-            [tests.WORDS.REGEX_AS_STRING, [ ['fred', 'barney', '&', 'pebbles'] ] ]
+            [tests.WORDS.REGEX_AS_STRING, [ ['fred', 'barney', '&', 'pebbles'] ] ],
+            [tests.WORDS.REGEX, [ ["my", "string", "to",  "be",  "found"] ] ]
         ])
     }
 }
 
-// Test process order
+// Test order when executed
 const testProcess = [modules.CAPITALIZE,
                      modules.CAMEL,
                      modules.ENDS,
                      modules.UPPER,
                      modules.WORDS
-   ]
+                    ]
 
 // Execute tests
 function runTests() {
+
     for (let i in testProcess) {
-        let object = testProcess [i]
+        let module = testProcess[i]
         
-        describe(object.DESCRIPTION, ()=> {
+        describe(module.DESCRIPTION, ()=> {
             // Define tests
-            for (let testCase of object.MODEL.keys() ) {
+            for (let testCase of module.MODEL.keys() ) {
                 it(testCase, () => {
-                    let currentDataArray = object.MODEL.get(testCase)
-                    let expectedData = object.EXPECTED.get(testCase)
+                    let currentDataArray = module.MODEL.get(testCase)
+                    let expectedData = module.EXPECTED.get(testCase)
                     let dataLength = currentDataArray.length
 
                     for (let pos = 0; pos < dataLength; pos++ ) {
@@ -135,7 +140,7 @@ function runTests() {
                             let param2 = currentDataArray[pos][1]
                             let param3 = currentDataArray[pos][2]
                                 
-                            expect(object.func(param1, param2, param3)).to.equal(
+                            expect(module.func(param1, param2, param3)).to.equal(
                                 expectedData[pos]
                             )
 
@@ -143,21 +148,21 @@ function runTests() {
                             let param1 = currentDataArray[pos][0]
                             let param2 = currentDataArray[pos][1]
                             
-                            if (object == modules.WORDS) {
-                                // Required the deep equal since JS arrays objects
-                                expect(object.func(param1, param2)).to.deep.equal(
+                            if (module == modules.WORDS) {
+                                // Required the deep equal since JS arrays are objects
+                                expect(module.func(param1, param2)).to.deep.equal(
                                     expectedData[pos])
                             } else {
-                                expect(object.func(param1, param2)).to.equal(
+                                expect(module.func(param1, param2)).to.equal(
                                     expectedData[pos])
                             }
                         } else {
-                            if (object == modules.WORDS) {
-                                // Required the deep equal since JS arrays objects
-                                expect(object.func(currentDataArray[pos])).to.deep.equal(
+                            if (module == modules.WORDS) {
+                                // Required the deep equal since JS arrays are objects
+                                expect(module.func(currentDataArray[pos])).to.deep.equal(
                                     expectedData[pos])
                             } else {
-                                expect(object.func(currentDataArray[pos])).to.equal(
+                                expect(module.func(currentDataArray[pos])).to.equal(
                                     expectedData[pos])
                             }
                         }
