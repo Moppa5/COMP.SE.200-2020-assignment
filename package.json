@@ -6,7 +6,14 @@
   "type": "module",
   "scripts": {
     "test": "mocha",
-    "test:awesome": "mocha --reporter mochawesome || true"
+    "test:awesome": "mocha --reporter mochawesome || true",
+    "test:arithmetic": "mocha test/arithmetic.test.js",
+    "test:array": "mocha test/array.test.js",
+    "test:boolean": "mocha test/boolean.test.js",
+    "test:conversion": "mocha test/conversion.test.js",
+    "test:function": "mocha test/function.test.js",
+    "test:object": "mocha test/object.test.js",
+    "test:string": "mocha test/string.test.js"
   },
   "author": "",
   "license": "MIT",
