@@ -6,14 +6,14 @@
   "type": "module",
   "scripts": {
     "test": "mocha",
-    "test:awesome": "mocha --reporter mochawesome || true",
-    "test:arithmetic": "mocha test/arithmetic.test.js",
-    "test:array": "mocha test/array.test.js",
-    "test:boolean": "mocha test/boolean.test.js",
-    "test:conversion": "mocha test/conversion.test.js",
-    "test:function": "mocha test/function.test.js",
-    "test:object": "mocha test/object.test.js",
-    "test:string": "mocha test/string.test.js"
+    "test:awesome": "mocha --reporter mochawesome || exit 0",
+    "test:arithmetic": "mocha test/arithmetic.test.js || exit 0",
+    "test:array": "mocha test/array.test.js || exit 0",
+    "test:boolean": "mocha test/boolean.test.js || exit 0",
+    "test:conversion": "mocha test/conversion.test.js || exit 0",
+    "test:function": "mocha test/function.test.js || exit 0",
+    "test:object": "mocha test/object.test.js || exit 0",
+    "test:string": "mocha test/string.test.js || exit 0"
   },
   "author": "",
   "license": "MIT",
