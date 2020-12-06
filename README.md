@@ -1,4 +1,4 @@
-[![Coverage Status](https://coveralls.io/repos/github/Moppa5/COMP.SE.200-2020-assignment/badge.svg?branch=master)](https://coveralls.io/github/Moppa5/COMP.SE.200-2020-assignment?branch=master)
+[![Build Status](https://travis-ci.org/Moppa5/COMP.SE.200-2020-assignment.svg?branch=master)](https://travis-ci.org/Moppa5/COMP.SE.200-2020-assignment)
 
 # Student template
 
